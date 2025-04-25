@@ -62,8 +62,9 @@ import org.slf4j.LoggerFactory;
 public class Server {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
-    private static final String APPLICATION_NAME = "Fraunhofer IOSB AAS OPC UA Server";
-    private static final String APPLICATION_URI = "urn:hostname:Fraunhofer:OPCUA:AasServer";
+    private static final String APPLICATION_NAME = "FA3ST Service Endpoint OPC UA";
+    private static final String APPLICATION_URI = "urn:hostname:fa3st:service:endpoint:opcua";
+    private static final String PRODUCT_URI = "urn:fa3st:service:endpoint:opcua";
     private static final int CERT_KEY_SIZE = 2048;
     private static final String ISSUERS_PATH = "issuers";
 
@@ -183,7 +184,7 @@ public class Server {
         // ApplicationIdentity.getActualHostNameWithoutDomain())
         appDescription.setApplicationName(new LocalizedText(APPLICATION_NAME + "@hostname"));
         appDescription.setApplicationUri(APPLICATION_URI);
-        appDescription.setProductUri("urn:de:fraunhofer:iosb:opcua:aas:server");
+        appDescription.setProductUri(PRODUCT_URI);
         appDescription.setApplicationType(ApplicationType.Server);
         uaServer.setPort(Protocol.OpcTcp, tcpPort);
         LOGGER.trace("Loading certificates..");
@@ -272,8 +273,7 @@ public class Server {
             buildInfo.setBuildNumber(buildNumber);
 
         }
-
-        final URL classFile = UaServer.class.getResource("/de/fraunhofer/iosb/ilt/aas/service/protocol/Server.class");
+        final URL classFile = Server.class.getResource(getClass().getCanonicalName().replace('.', '/') + ".class");
         if (classFile != null && classFile.getFile() != null) {
             final File mfFile = new File(classFile.getFile());
             buildInfo.setBuildDate(DateTime.fromMillis(mfFile.lastModified()));
