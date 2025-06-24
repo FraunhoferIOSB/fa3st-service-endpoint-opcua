@@ -34,21 +34,20 @@ jobs:
         distribution: 'adopt'
         java-version: 17
 
-    - name: Ensure fa3st-service-core is available
+    - name: Ensure fa3st-service dependencies are available
       run: |
         set -e
-        mvn help:evaluate -q -Dexpression=fa3st.service.version -DforceStdout
         FA3ST_SERVICE_VERSION=$(mvn help:evaluate -q -Dexpression=fa3st.service.version -DforceStdout)
         echo "fa3st.service.version is ${FA3ST_SERVICE_VERSION}"
         if mvn dependency:get -Dartifact=org.eclipse.digitaltwin.fa3st.service:fa3st-service-core:$FA3ST_SERVICE_VERSION; then
-          echo "fa3st-service-core found in maven"
+          echo "dependencies avaiable via maven"
         else
-          echo "fa3st-service-core not found in maven - building locally"
-          echo "checking out fa3st-service repo..."
+          echo "dependencies not found via maven - building locally"
+          echo "cloning out fa3st-service repo..."
           git clone https://github.com/eclipse-fa3st/fa3st-service.git fa3st-service          
-          echo "installing fa3st-service-core"
-          mvn -f fa3st-service/pom.xml install -P core -DskipTests=true
-          echo "fa3st-service-core successfully build from source"
+          echo "building dependencies locally..."
+          mvn -f fa3st-service/pom.xml install -pl core,filestorage-memory,messagebus-internal,persistence-memory -DskipTests=true
+          echo "dependencies successfully build locally"
         fi
 
     - name: Build with Maven
