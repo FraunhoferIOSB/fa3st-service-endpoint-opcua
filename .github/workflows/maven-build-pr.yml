@@ -37,9 +37,9 @@ jobs:
     - name: Ensure fa3st-service-core is available
       run: |
         set -e
+        mvn help:evaluate -q -Dexpression=fa3st.service.version -DforceStdout
         FA3ST_SERVICE_VERSION=$(mvn help:evaluate -q -Dexpression=fa3st.service.version -DforceStdout)
         echo "fa3st.service.version is ${FA3ST_SERVICE_VERSION}"
-
         if mvn dependency:get -Dartifact=org.eclipse.digitaltwin.fa3st.service:fa3st-service-core:$FA3ST_SERVICE_VERSION; then
           echo "fa3st-service-core found in maven"
         else
