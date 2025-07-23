@@ -38,7 +38,7 @@
         <url>https://github.com/FraunhoferIOSB/fa3st-endpoint-opcua/issues</url>
     </issueManagement>
     <properties>
-        <commons.codec.version>1.18.0</commons.codec.version>
+        <commons.codec.version>1.19.0</commons.codec.version>
         <dir.generated-code>${project.build.directory}/generated-sources</dir.generated-code>
         <dir.generated-resources>${project.build.directory}/generated-resources</dir.generated-resources>
         <fa3st.common.version>1.0.0-SNAPSHOT</fa3st.common.version>
